@@ -1,0 +1,10 @@
+linters:
+  eslint:
+    config: './eslintrc.json'
+files:
+  ignore:
+    - "bin/*"
+    - "db/*"
+    - "config/*"
+    - "Guardfile"
+    - "Rakefile"

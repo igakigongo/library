@@ -1,0 +1,10 @@
+{
+  "name": "library",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+  },
+  "author": "Edward Iga Kigongo",
+  "license": "ISC"
+}
