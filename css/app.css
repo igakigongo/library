@@ -1,0 +1,47 @@
+:root {
+  --font-custom: 'Sacramento', cursive;
+  --font-primary: 'Open Sans', sans-serif;
+}
+
+body {
+  background-color: #F5F5F6;
+}
+
+h1 {
+  font-family: var(--font-custom);
+  font-size: 3.5rem;
+}
+
+.bg-success {
+  background-color: #689f38 !important;
+}
+
+.card {
+  border-radius: .125rem !important;
+  font-family: var(--font-primary);
+  font-size: 1rem;
+}
+
+.card, .card-header, .card-footer {
+  border-color: #97cf65!important;
+}
+
+.card-header {
+  padding: .125rem !important;
+}
+
+.card-header:first-child {
+ border-radius: calc(0.125rem - 1px) calc(0.125rem - 1px) 0 0;
+}
+
+.card-header .bg-success {
+  background-color: #387002!important;
+}
+
+.card-footer {
+  background-color: #97cf65;
+}
+
+.card-footer:last-child {
+  border-radius: calc(0.125rem - 1px) calc(0.125rem - 1px) 0 0;
+}
