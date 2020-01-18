@@ -55,7 +55,7 @@ function loadSampleBooks() {
   });
 }
 
-loadSampleBooks().then(console.log);
+loadSampleBooks();
 
 /**
  *  DOM Manipulation functions
@@ -74,9 +74,8 @@ function createCell(text, isData = true, style = null){
 
 function createRow(book, id){
   if (!(book instanceof Book))
-    throw Error("Cannot create a row for an object that is not a book");
-
-  console.log("we have a book instance");
+    throw "Cannot create a row for an object that is not a book";
+    
   const tableRow = document.createElement("tr");
 
   const similar = ["title", "author", "pages"]
@@ -145,7 +144,6 @@ function isReadCheckBoxChangeHandler(evt){
 }
 
 function resetBookEntryForm(formElement){
-  console.log(formElement);
   ["book-author", "book-title", "book-total-pages", "book-is-read"].forEach(function(id){
     const ele = formElement.querySelector(`#${id}`);
     if (ele){
