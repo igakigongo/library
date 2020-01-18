@@ -11,14 +11,26 @@
 		<title>The Library of Alucard</title>
 	</head>
 	<body>
-		<header>
+		<!--<header>
 			<nav class="navbar navbar-expand-lg navbar-dark bg-success">
 				<a class="navbar-brand mx-auto font-weight-bold" href="#">The Library of Alucard</a>
 			</nav>
-		</header>
+		</header>-->
 		<main>
 			<div class="container mt-5" id="root">
-				<h1 class="text-center">Personal Catalogue</h1>
+        <h1 class="text-center py-5">Personal Catalogue</h1>
+        <div class="col-12 py-3 section-add-book" id="section-add-book">
+          <input class="form-control shadow-lg" id="book-title" placeholder="Book Title" type="text" />
+          <input class="form-control shadow-lg" id="book-author" placeholder="Book Author" type="text" />
+          <input class="form-control shadow-lg" id="book-total-pages" placeholder="Total Pages" type="number" />
+          <div class="custom-control custom-checkbox m-0" id="form-book-is-read">
+            <input class="custom-control-input shadow-lg" type="checkbox" id="book-is-read" value="false" />
+            <label class="custom-control-label" for="book-is-read">Is Read?</label>
+          </div>
+          <button class="btn btn-block btn-sm btn-success shadow-lg btn-add-book" id="btn-add-book" type="button">
+            Add book
+          </button>
+        </div>
 				<div class="col-12">
 					<div class="card border-success shadow">
 						<div class="card-header bg-success p-1">
@@ -27,7 +39,7 @@
 							<table class="table table-hover mb-0">
 								<thead>
 									<tr>
-										<th scope="col">ID</th>
+										<th scope="col">Code</th>
 										<th scope="col">Title</th>
 										<th scope="col">Author</th>
 										<th scope="col">Pages</th>
@@ -40,7 +52,7 @@
 						</div>
 						<div class="card-footer border-success"></div>
 					</div>
-				</div>
+        </div>
 			</div>
 		</main>
 		<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
