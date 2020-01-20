@@ -1,4 +1,13 @@
 /**
+ * Application Events
+ */
+const ApplicationEvents = {
+  BOOK_ADDED: "BookAdded",
+  BOOK_REMOVED: "BookRemoved",
+  BOOK_STATUS_CHANGED: "BookStatusChanged",
+};
+
+/**
  * Domain Models
  */
 function Book(author, title, pages, isRead){
@@ -73,9 +82,13 @@ const library  = (function Library(){
  * Consider this to be something similar to an API call
  */
 function loadSampleBooks() {
+  const sampleBooks = [
+    new Book("Edward", "Dracula 1992", 762, true), 
+    new Book("Edward", "When the sun sets", 200, false),
+    new Book("Fred", "Freddy Kruggar vs Jason", 1000, true)];
+    
   return new Promise(function(resolve){
-    [new Book("Edward", "Dracula 1992", 762, true), new Book("Edward", "When the sun sets", 200, false),
-      new Book("Fred", "Freddy Kruggar vs Jason", 1000, true)].forEach(function(b){
+    sampleBooks.forEach(function(b){
       library.addBook(b);
       resolve("Initialized Library");    
     });
@@ -107,7 +120,9 @@ function createControlButtons(bookIndex, handlers = null){
   removeBookButton.classList.add("btn", "btn-sm", "btn-danger");
 
   if (removeBookHandler && (typeof removeBookHandler) === "function")
+  {
     removeBookButton.addEventListener("click", removeBookHandler);
+  }
 
   const changeBookStatusButton = document.createElement("button");
   changeBookStatusButton.innerHTML = "Change Status";
@@ -184,8 +199,7 @@ function addBookToLibraryEventHandler(evt){
   try{
     const newBook = new Book(author, title, +pages, isRead === "true");
     library.addBook(newBook);
-    resetBookEntryForm(addBookSection);
-    render();
+    document.dispatchEvent(new Event(ApplicationEvents.BOOK_ADDED));
   }catch(err){
     alert(err);
   }
@@ -194,9 +208,8 @@ function addBookToLibraryEventHandler(evt){
 function changeBookStatusEventHandler(evt){
   evt.preventDefault();
   const { id } = evt.target.dataset;
-  library.toggleBookReadStatus(+id).then(function(){
-    render();
-  });
+  library.toggleBookReadStatus(+id);
+  document.dispatchEvent(new Event(ApplicationEvents.BOOK_STATUS_CHANGED));
 }
 
 function isReadCheckBoxChangeHandler(evt){
@@ -209,7 +222,7 @@ function removeBookEventHandler(evt){
   evt.preventDefault();
   const {id} = evt.target.dataset;
   library.removeBook(+id).then(function(){
-    render();
+    document.dispatchEvent(new Event(ApplicationEvents.BOOK_REMOVED));
   });
 }
 
@@ -252,4 +265,8 @@ function render(){
   }));
 }
 
-render();
+document.addEventListener("DOMContentLoaded", render);
+document.addEventListener(ApplicationEvents.BOOK_ADDED, render);
+document.addEventListener(ApplicationEvents.BOOK_ADDED, () => resetBookEntryForm(addBookSection));
+document.addEventListener(ApplicationEvents.BOOK_REMOVED, render);
+document.addEventListener(ApplicationEvents.BOOK_STATUS_CHANGED, render);
