@@ -16,7 +16,10 @@ Clone this repository on your machine and navigate to the root directory.
 
 Open the `index.html` page within it using a browser.
 
-### Installing
+## Live Project
+View the demo project at this [URL](https://rawcdn.githack.com/igakigongo/library/052fdcc84d0ba9723d065684b1a6336da97b56b7/index.html)
+
+## Installing
 
 No special installation requirements exist, except the need to have a browser and git for cloning the solution. Or
 simply download a copy from github.
