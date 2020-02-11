@@ -1,0 +1,93 @@
+:root {
+  --font-custom: 'Sacramento', cursive;
+}
+
+body {
+  background-color: #F5F5F6;
+}
+
+h1 {
+  font-family: var(--font-custom);
+  font-size: 4.5rem;
+  text-shadow: 2px 2px #689f38;
+}
+
+.bg-success {
+  background-color: #689f38 !important;
+}
+
+.card {
+  border-radius: .125rem !important;
+  font-size: .875rem;
+}
+
+.card, .card-header, .card-footer {
+  border-color: #97cf65!important;
+}
+
+.card-header {
+  padding: .125rem !important;
+}
+
+.card-header:first-child {
+  border-radius: calc(0.125rem - 1px) calc(0.125rem - 1px) 0 0;
+}
+
+.card-header .bg-success {
+  background-color: #387002!important;
+}
+
+.card-footer {
+  background-color: #97cf65;
+}
+
+.card-footer:last-child {
+  border-radius: calc(0.125rem - 1px) calc(0.125rem - 1px) 0 0;
+}
+
+/* section details for adding a book */
+.section-add-book {
+  display: grid;
+  column-gap: 1rem;
+  grid-template-columns: repeat(10, 1fr);
+}
+
+.section-add-book .form-control, .section-add-book .custom-control-label {
+  font-size: .875rem;
+}
+
+.section-add-book #book-title {
+  grid-column: 1/4;
+}
+
+.section-add-book #book-author {
+  grid-column: 4/7;
+}
+
+.section-add-book #book-total-pages {
+  grid-column: 7/9;
+}
+
+.section-add-book .form-check-inline {
+  grid-column: 9;
+}
+
+.btn-add-book {
+  grid-column: 10;
+}
+
+
+
+/* modal styles */
+.modal-header, .modal-footer {
+  padding: .75rem 1rem;
+}
+
+.modal-footer>* {
+  margin: 0;
+}
+
+.modal-header h5 {
+  font-size: 1rem;
+  font-weight: 600;
+}
