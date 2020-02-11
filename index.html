@@ -13,7 +13,12 @@
 	<body>
 		<main>
 			<div class="container mt-5" id="root">
-        <h1 class="text-center py-5">Personal Catalogue</h1>
+				<h1 class="text-center py-5">Personal Catalogue</h1>
+				<div class="offset-4 col-4 py-3">
+					<button class="btn btn-block btn-success" id="btn-toggle-add-form">
+						Add Book To Catalog
+					</button>
+				</div>
         <div class="col-12 py-3 section-add-book" id="section-add-book">
           <input class="form-control shadow-lg" id="book-title" placeholder="Book Title" type="text" />
           <input class="form-control shadow-lg" id="book-author" placeholder="Book Author" type="text" />
@@ -23,7 +28,7 @@
             <label class="custom-control-label" for="book-is-read">Is Read?</label>
           </div>
           <button class="btn btn-block btn-sm btn-success shadow-lg btn-add-book" id="btn-add-book" type="button">
-            Add book
+            Save
           </button>
         </div>
 				<div class="col-12">
