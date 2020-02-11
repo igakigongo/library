@@ -1,10 +1,13 @@
+/* eslint-disable no-unused-expressions */
+/* eslint-disable no-use-before-define */
+/* eslint-disable no-restricted-globals */
 /**
  * Application Events
  */
 const ApplicationEvents = {
   BOOK_ADDED: 'BookAdded',
   BOOK_REMOVED: 'BookRemoved',
-  BOOK_STATUS_CHANGED: 'BookStatusChanged'
+  BOOK_STATUS_CHANGED: 'BookStatusChanged',
 };
 
 /**
@@ -12,10 +15,9 @@ const ApplicationEvents = {
  */
 function Book(author, title, pages, isRead) {
   // Ensure that only a valid book can be created - UI should be able to handle these errors
-  if (!author) throw 'Invalid author';
-  if (!title) throw 'Invalid author';
-  if (!pages || isNaN(pages) || parseInt(pages) < 1)
-    throw Error('Invalid number of pages');
+  if (!author) throw Error('Invalid author');
+  if (!title) throw Error('Invalid author');
+  if (!pages || isNaN(pages) || parseInt(pages, 10) < 1) throw Error('Invalid number of pages');
 
   this.author = author;
   this.title = title;
@@ -23,17 +25,20 @@ function Book(author, title, pages, isRead) {
   this.isRead = isRead || false;
 }
 
-Book.prototype.info = function() {
+// eslint-disable-next-line func-names
+Book.prototype.info = function () {
   return `${this.title} by ${this.author}, ${
     this.pages
   } pages, ${this.readStatus()}`;
 };
 
-Book.prototype.readStatus = function() {
+// eslint-disable-next-line func-names
+Book.prototype.readStatus = function () {
   return this.isRead ? 'Read' : 'Not yet read';
 };
 
-Book.prototype.toggleStatus = function() {
+// eslint-disable-next-line func-names
+Book.prototype.toggleStatus = function () {
   this.isRead = !this.isRead;
 };
 
@@ -42,7 +47,7 @@ Book.prototype.toggleStatus = function() {
  */
 const library = (function Library() {
   let books = [];
-  let localStorageKey = 'catalog-jubei';
+  const localStorageKey = 'catalog-jubei';
   const supportsLocalStorage = !!window.localStorage;
 
   /**
@@ -52,13 +57,13 @@ const library = (function Library() {
     const sampleBooks = [
       new Book('Edward', 'Dracula 1992', 762, true),
       new Book('Edward', 'When the sun sets', 200, false),
-      new Book('Fred', 'Freddy Kruggar vs Jason', 1000, true)
+      new Book('Fred', 'Freddy Kruggar vs Jason', 1000, true),
     ];
 
-    sampleBooks.forEach(function(b) {
+    sampleBooks.forEach((b) => {
       addBookToLibrary(b);
     });
-  })();
+  }());
 
   function addBookToLibrary(newBookEntry) {
     books = [newBookEntry, ...books];
@@ -70,13 +75,11 @@ const library = (function Library() {
   }
 
   function removeBook(id) {
-    return new Promise(function(resolve) {
-      books = books.filter(function(_, index) {
-        return index !== id;
-      }, []);
+    return new Promise(((resolve) => {
+      books = books.filter((_, index) => index !== id, []);
       supportsLocalStorage && syncLocalStorage();
       resolve();
-    });
+    }));
   }
 
   function syncLocalStorage() {
@@ -84,8 +87,8 @@ const library = (function Library() {
   }
 
   function toggleBookReadStatus(id) {
-    return new Promise(function(resolve) {
-      books = books.map(function(book, index) {
+    return new Promise(((resolve) => {
+      books = books.map((book, index) => {
         if (index === id) {
           book.toggleStatus();
         }
@@ -93,16 +96,16 @@ const library = (function Library() {
       });
       supportsLocalStorage && syncLocalStorage();
       resolve();
-    });
+    }));
   }
 
   return {
     addBook: addBookToLibrary,
     getCatalog,
     removeBook,
-    toggleBookReadStatus
+    toggleBookReadStatus,
   };
-})();
+}());
 
 /**
  *  DOM Manipulation functions
@@ -113,7 +116,7 @@ function createCell(text, isData = true, style = null) {
     : document.createElement('th');
   cell.innerHTML = text;
   if (style) {
-    Object.getOwnPropertyNames(style).forEach(function(prop) {
+    Object.getOwnPropertyNames(style).forEach((prop) => {
       cell.style[prop] = style[prop];
     });
   }
@@ -138,21 +141,17 @@ function createControlButtons(bookIndex, handlers = null) {
   changeBookStatusButton.classList.add('btn', 'btn-sm', 'btn-success');
   changeBookStatusButton.style.marginRight = '0.5rem';
 
-  if (changeBookStatusHandler && typeof changeBookStatusHandler === 'function')
-    changeBookStatusButton.addEventListener('click', changeBookStatusHandler);
+  if (changeBookStatusHandler && typeof changeBookStatusHandler === 'function') changeBookStatusButton.addEventListener('click', changeBookStatusHandler);
 
   return [changeBookStatusButton, removeBookButton];
 }
 
 function createRow(book, id, createControlButtonsFn, handlers) {
-  if (!(book instanceof Book))
-    throw 'Cannot create a row for an object that is not a book';
+  if (!(book instanceof Book)) throw Error('Cannot create a row for an object that is not a book');
 
   const tableRow = document.createElement('tr');
 
-  const similar = ['title', 'author', 'pages'].map(prop =>
-    createCell(book[prop])
-  );
+  const similar = ['title', 'author', 'pages'].map(prop => createCell(book[prop]));
 
   const buttons = createControlButtonsFn(id, handlers);
   const buttonsCell = document.createElement('td');
@@ -163,7 +162,7 @@ function createRow(book, id, createControlButtonsFn, handlers) {
     createCell(id + 1, false),
     ...similar,
     createCell(book.readStatus(), false, { 'font-weight': 'bold' }),
-    buttonsCell
+    buttonsCell,
   );
 
   return tableRow;
@@ -175,16 +174,13 @@ function getHTMLInputElementValueByName(rootElement, id) {
   if (typeof id === 'undefined' || !id) throw Error('Invalid element name');
 
   const element = rootElement.querySelector(`#${id}`);
-  if (!(element instanceof HTMLInputElement))
-    throw Error('Element is not an HTMLInputElement');
+  if (!(element instanceof HTMLInputElement)) throw Error('Element is not an HTMLInputElement');
 
   return element.value;
 }
 
 function getBookValuesFromForm(rootElement, elementIds) {
-  return elementIds.map(function(id) {
-    return getHTMLInputElementValueByName(rootElement, id);
-  });
+  return elementIds.map((id) => getHTMLInputElementValueByName(rootElement, id));
 }
 
 /**
@@ -207,19 +203,20 @@ function addBookToLibraryEventHandler(evt) {
     'book-author',
     'book-title',
     'book-total-pages',
-    'book-is-read'
+    'book-is-read',
   ];
   const [author, title, pages, isRead] = getBookValuesFromForm(
     addBookSection,
-    elementIds
+    elementIds,
   );
 
   try {
     const newBook = new Book(author, title, +pages, isRead === 'true');
     library.addBook(newBook);
     document.dispatchEvent(new Event(ApplicationEvents.BOOK_ADDED));
-  } catch (err) {
-    alert(err);
+  } catch ({ message }) {
+    // eslint-disable-next-line no-alert
+    alert(message);
   }
 }
 
@@ -239,13 +236,13 @@ function isReadCheckBoxChangeHandler(evt) {
 function removeBookEventHandler(evt) {
   evt.preventDefault();
   const { id } = evt.target.dataset;
-  library.removeBook(+id).then(function() {
+  library.removeBook(+id).then(() => {
     document.dispatchEvent(new Event(ApplicationEvents.BOOK_REMOVED));
   });
 }
 function resetBookEntryForm(formElement) {
   const elements = formElement.querySelectorAll('input');
-  elements.forEach(function(ele) {
+  elements.forEach((ele) => {
     if (ele) {
       switch (ele.type) {
         case 'text':
@@ -256,16 +253,18 @@ function resetBookEntryForm(formElement) {
         case 'checkbox':
           ele.checked = false;
           break;
+
+        default:
+          break;
       }
     }
   });
 }
 
 function toggleAddBookFormVisibility() {
-  const display = addBookSection.style.display;
+  const { display } = addBookSection.style;
   addBookSection.style.display = display === 'none' ? 'grid' : 'none';
-  toggleFormButton.innerText =
-    display === 'none' ? 'Hide Form' : 'Add Book To Catalog';
+  toggleFormButton.innerText = display === 'none' ? 'Hide Form' : 'Add Book To Catalog';
 }
 
 /**
@@ -283,20 +282,18 @@ function render() {
   tableBody.innerHTML = '';
 
   tableBody.append(
-    ...library.getCatalog().map(function(book, index) {
+    ...library.getCatalog().map((book, index) => {
       const handlers = {
         removeBookHandler: removeBookEventHandler,
-        changeBookStatusHandler: changeBookStatusEventHandler
+        changeBookStatusHandler: changeBookStatusEventHandler,
       };
       return createRow(book, index, createControlButtons, handlers);
-    })
+    }),
   );
 }
 
 document.addEventListener('DOMContentLoaded', render);
 document.addEventListener(ApplicationEvents.BOOK_ADDED, render);
-document.addEventListener(ApplicationEvents.BOOK_ADDED, () =>
-  resetBookEntryForm(addBookSection)
-);
+document.addEventListener(ApplicationEvents.BOOK_ADDED, () => resetBookEntryForm(addBookSection));
 document.addEventListener(ApplicationEvents.BOOK_REMOVED, render);
 document.addEventListener(ApplicationEvents.BOOK_STATUS_CHANGED, render);
